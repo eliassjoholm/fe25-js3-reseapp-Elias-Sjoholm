@@ -3,7 +3,9 @@ import CountryCard from "../components/countriescard";
 import SearchField from "../components/searchfield";
 import { useCountries } from "../hooks/usecountrieshook";
 import RegionFilter from "../components/regionfilters";
-
+import Pagination from "../components/pagenation";
+    
+const PAGE_SIZE = 12;
 export default function HomePage() {
   const {
     data: countries,
@@ -16,6 +18,9 @@ export default function HomePage() {
   const region = searchParams.get("region") ?? "All";
   const query = searchParams.get("query") ?? "";
 
+   const pageParam = Number(searchParams.get("page"));
+  const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
+
   function updateParam(key: string, value: string) {
     setSearchParams(
       (previous) => {
@@ -25,6 +30,10 @@ export default function HomePage() {
           next.set(key, value);
         } else {
           next.delete(key);
+        }
+
+        if (key !== "page") {
+          next.delete("page");
         }
 
         return next;
@@ -41,6 +50,11 @@ export default function HomePage() {
     updateParam("region", value);
   
 
+  }
+
+   function handlePage(newPage: number) {
+    updateParam("page", newPage > 1 ? String(newPage) : "");
+    window.scrollTo(0, 0);
   }
 
   if (isPending) {
@@ -83,6 +97,11 @@ export default function HomePage() {
     return matchesQuery && matchesRegion;
   });
 
+  const totalPages = Math.max(1, Math.ceil(filteredCountries.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageCountries = filteredCountries.slice(start, start + PAGE_SIZE);
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="mb-2 text-3xl font-bold">
@@ -102,13 +121,24 @@ export default function HomePage() {
           Inga länder matchar dina kriterier
         </p>
       ) : (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredCountries.map((country) => (
-            <li key={country.alpha3Code}>
-              <CountryCard country={country} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {pageCountries.map((country) => (
+              <li
+                key={country.alpha3Code}
+                className="w-full max-w-[260px]"
+              >
+                <CountryCard country={country} />
+              </li>
+            ))}
+          </ul>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePage}
+          />
+        </>
       )}
     </main>
   );
