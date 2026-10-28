@@ -1,3 +1,4 @@
+// väderrutan på landets sida
 import { useWeather } from "../hooks/useweather";
 import type { CountryDetails } from "../types/country";
 import { describeWeather } from "../utils/describeWeather";
@@ -6,14 +7,16 @@ interface WeatherCardProps {
   country: CountryDetails;
 }
 
+// visar laddning, fel eller vädret
 export default function WeatherCard({ country }: WeatherCardProps) {
   const { data: weather, isPending, isError, refetch } = useWeather(country);
+  // väderkod -> text + ikon
   const description = weather ? describeWeather(weather.weatherCode) : null;
 
   return (
     <section
       aria-labelledby="weather-heading"
-      className="mt-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+      className="mt-6 rounded-lg border border-slate-700 bg-slate-800 p-6 shadow-sm"
     >
       <h2 id="weather-heading" className="mb-4 text-xl font-semibold">
         Väder just nu{weather ? ` i ${weather.place}` : ""}
@@ -23,14 +26,14 @@ export default function WeatherCard({ country }: WeatherCardProps) {
 
       {isError && (
         <div>
-          <p role="alert" className="mb-3 text-red-600">
+          <p role="alert" className="mb-3 text-red-400">
             Kunde inte hämta vädret.
           </p>
 
           <button
             type="button"
             onClick={() => void refetch()}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="rounded-lg bg-indigo-400 px-4 py-2 text-indigo-950 hover:bg-indigo-300 focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Försök igen
           </button>

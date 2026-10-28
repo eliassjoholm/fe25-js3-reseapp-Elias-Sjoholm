@@ -1,3 +1,4 @@
+// typ för wikipedia-sammanfattningen
 export interface WikiSummary {
   title: string;
   extract: string;

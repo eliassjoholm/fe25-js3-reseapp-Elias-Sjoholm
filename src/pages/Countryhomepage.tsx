@@ -1,3 +1,4 @@
+// detaljsidan för ett land
 import { Link, useLocation, useParams } from "react-router";
 import { useCountry } from "../hooks/useCountries";
 import WeatherCard from "../components/weatherCard";
@@ -5,6 +6,7 @@ import WikiIntro from "../components/wikintro";
 
 const numberFormatter = new Intl.NumberFormat("sv-SE");
 
+// hämtar landet från url:en och visar fakta, väder och wiki
 export default function CountryPage() {
   const { code = "" } = useParams();
   const location = useLocation();
@@ -25,7 +27,7 @@ export default function CountryPage() {
         <div role="status" className="flex items-center gap-3">
           <span
             aria-hidden="true"
-            className="h-6 w-6 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
+            className="h-6 w-6 animate-spin rounded-full border-4 border-indigo-400 border-t-transparent"
           />
           <span>Laddar land...</span>
         </div>
@@ -36,14 +38,14 @@ export default function CountryPage() {
   if (isError) {
     return (
       <main className="mx-auto max-w-5xl px-4 py-8">
-        <p role="alert" className="mb-4 text-red-600">
+        <p role="alert" className="mb-4 text-red-400">
           Kunde inte hämta landet.
         </p>
 
         <button
           type="button"
           onClick={() => void refetch()}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="rounded-lg bg-indigo-400 px-4 py-2 text-indigo-950 hover:bg-indigo-300 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           Försök igen
         </button>
@@ -58,7 +60,7 @@ export default function CountryPage() {
 
         <Link
           to={backLink}
-          className="text-blue-600 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          className="text-indigo-300 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
         >
           Tillbaka till alla länder
         </Link>
@@ -66,6 +68,7 @@ export default function CountryPage() {
     );
   }
 
+  // listor -> vanlig text
   const languages =
     country.languages?.map((language) => language.name).join(", ") ||
     "Saknas";
@@ -78,24 +81,24 @@ export default function CountryPage() {
     <main className="mx-auto max-w-5xl px-4 py-8">
       <Link
         to={backLink}
-        className="mb-6 inline-block rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        className="mb-6 inline-block rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
       >
         <span aria-hidden="true">← </span>Tillbaka
       </Link>
 
-      <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <article className="rounded-lg border border-slate-700 bg-slate-800 p-6 shadow-sm">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
           <img
             src={country.flags.svg}
             alt={`Flagga för ${country.name}`}
-            className="w-full max-w-60 rounded border border-gray-200"
+            className="w-full max-w-60 rounded border border-slate-700"
           />
 
           <div>
             <h1 className="text-3xl font-bold">{country.name}</h1>
 
             {country.nativeName && (
-              <p className="mb-4 text-lg text-gray-600">
+              <p className="mb-4 text-lg text-slate-400">
                 {country.nativeName}
               </p>
             )}

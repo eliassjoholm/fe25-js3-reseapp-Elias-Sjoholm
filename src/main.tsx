@@ -1,3 +1,4 @@
+// startpunkten, kopplar ihop react, router och react-query
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
@@ -9,6 +10,7 @@ import {
 import App from "./App";
 import "./index.css";
 
+// cache för alla api-anrop
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(

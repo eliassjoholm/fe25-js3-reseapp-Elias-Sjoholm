@@ -1,5 +1,7 @@
+// introtext från wikipedia
 import type { WikiSummary } from "../types/wiki";
 
+// det vi använder från wikipedias svar
 interface WikiResponse {
   type: string;
   title: string;
@@ -8,6 +10,7 @@ interface WikiResponse {
   content_urls: { desktop: { page: string } };
 }
 
+// hämtar sammanfattningen om landet, null om ingen artikel finns
 export async function getWikiSummary(
   countryName: string
 ): Promise<WikiSummary | null> {

@@ -1,9 +1,11 @@
+// wikipedia-rutan på landets sida
 import { useWikiSummary } from "../hooks/useWikiSum";
 
 interface WikiIntroProps {
   countryName: string;
 }
 
+// visar introtext, bild och länk till artikeln
 export default function WikiIntro({ countryName }: WikiIntroProps) {
   const { data: summary, isPending, isError, refetch } =
     useWikiSummary(countryName);
@@ -11,7 +13,7 @@ export default function WikiIntro({ countryName }: WikiIntroProps) {
   return (
     <section
       aria-labelledby="wiki-heading"
-      className="mt-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
+      className="mt-6 rounded-lg border border-slate-700 bg-slate-800 p-6 shadow-sm"
     >
       <h2 id="wiki-heading" className="mb-4 text-xl font-semibold">
         Om {countryName}
@@ -21,14 +23,14 @@ export default function WikiIntro({ countryName }: WikiIntroProps) {
 
       {isError && (
         <div>
-          <p role="alert" className="mb-3 text-red-600">
+          <p role="alert" className="mb-3 text-red-400">
             Kunde inte hämta introtexten.
           </p>
 
           <button
             type="button"
             onClick={() => void refetch()}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="rounded-lg bg-indigo-400 px-4 py-2 text-indigo-950 hover:bg-indigo-300 focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Försök igen
           </button>
@@ -43,7 +45,7 @@ export default function WikiIntro({ countryName }: WikiIntroProps) {
             <img
               src={summary.imageUrl}
               alt={`Bild från Wikipedia-artikeln om ${summary.title}`}
-              className="w-full max-w-60 rounded border border-gray-200"
+              className="w-full max-w-60 rounded border border-slate-700"
             />
           )}
 
@@ -52,13 +54,13 @@ export default function WikiIntro({ countryName }: WikiIntroProps) {
               {summary.extract}
             </p>
 
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-slate-400">
               Källa: Wikipedia (CC BY-SA).{" "}
               <a
                 href={summary.articleUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-600 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                className="text-indigo-300 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
               >
                 Läs hela artikeln på Wikipedia
                 <span className="sr-only"> (öppnas i ny flik)</span>

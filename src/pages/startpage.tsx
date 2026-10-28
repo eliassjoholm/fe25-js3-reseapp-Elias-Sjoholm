@@ -1,3 +1,4 @@
+// startsidan med alla länder
 import { useSearchParams } from "react-router";
 import CountryCard from "../components/countriescard";
 import SearchField from "../components/searchfield";
@@ -5,7 +6,8 @@ import { useCountries } from "../hooks/usecountrieshook";
 import RegionFilter from "../components/regionfilters";
 import Pagination from "../components/pagenation";
     
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 12; // länder per sida
+// lista med sök, regionfilter och sidor
 export default function HomePage() {
   const {
     data: countries,
@@ -14,6 +16,7 @@ export default function HomePage() {
     refetch,
   } = useCountries();
 
+  // sök, region och sida ligger i url:en
   const [searchParams, setSearchParams] = useSearchParams();
   const region = searchParams.get("region") ?? "All";
   const query = searchParams.get("query") ?? "";
@@ -21,6 +24,7 @@ export default function HomePage() {
    const pageParam = Number(searchParams.get("page"));
   const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
 
+  // ändrar en sak i url:en, tar bort den om den är tom
   function updateParam(key: string, value: string) {
     setSearchParams(
       (previous) => {
@@ -32,26 +36,30 @@ export default function HomePage() {
           next.delete(key);
         }
 
+        // nytt filter -> tillbaka till sida 1
         if (key !== "page") {
           next.delete("page");
         }
 
         return next;
       },
-      { replace: key === "query" }
+      { replace: key === "query" } // inte en history-rad per bokstav
     );
   }
 
+  // när man skriver i sökfältet
   function handleSearch(value: string) {
     updateParam("query", value);
   }
 
+  // när man väljer region
   function handleRegion(value: string) {
     updateParam("region", value);
   
 
   }
 
+  // byter sida och scrollar upp
    function handlePage(newPage: number) {
     updateParam("page", newPage > 1 ? String(newPage) : "");
     window.scrollTo(0, 0);
@@ -63,7 +71,7 @@ export default function HomePage() {
         <div role="status" className="flex items-center gap-3">
           <span
             aria-hidden="true"
-            className="h-6 w-6 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
+            className="h-6 w-6 animate-spin rounded-full border-4 border-indigo-400 border-t-transparent"
           />
           <span>Laddar länder...</span>
         </div>
@@ -74,13 +82,13 @@ export default function HomePage() {
   if (isError) {
     return (
       <main className="p-8">
-        <p role="alert" className="mb-4 text-red-600">
+        <p role="alert" className="mb-4 text-red-400">
           Kunde inte hämta länder.
         </p>
         <button
           type="button"
           onClick={() => void refetch()}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="rounded-lg bg-indigo-400 px-4 py-2 text-indigo-950 hover:bg-indigo-300 focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           Försök igen
         </button>
@@ -88,6 +96,7 @@ export default function HomePage() {
     );
   }
 
+  // filtrera på namn + region
    const filteredCountries = countries.filter((country) => {
     const matchesQuery = country.name
       .toLowerCase()
@@ -97,6 +106,7 @@ export default function HomePage() {
     return matchesQuery && matchesRegion;
   });
 
+  // plocka ut länderna för just den här sidan
   const totalPages = Math.max(1, Math.ceil(filteredCountries.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * PAGE_SIZE;
@@ -108,7 +118,7 @@ export default function HomePage() {
         Utforska världen
       </h1>
 
-      <p className="mb-8 text-gray-600">
+      <p className="mb-8 text-slate-400">
         Upptäck världens {countries.length} länder
       </p>
 
@@ -117,7 +127,7 @@ export default function HomePage() {
       <RegionFilter selected={region} onSelect={handleRegion} />
 
       {filteredCountries.length === 0 ? (
-        <p className="text-gray-600">
+        <p className="text-slate-400">
           Inga länder matchar dina kriterier
         </p>
       ) : (

@@ -1,3 +1,5 @@
+// hjälpfunktion för väder
+// gör om open-meteos väderkod (WMO) till text + ikon
 export function describeWeather(code: number): { text: string; icon: string } {
   if (code === 0) return { text: "Klart", icon: "☀️" };
   if (code <= 3) return { text: "Molnigt", icon: "⛅" };

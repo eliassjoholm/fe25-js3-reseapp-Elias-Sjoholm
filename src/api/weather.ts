@@ -1,10 +1,13 @@
+// väder från open-meteo
 import type { CountryDetails } from "../types/country";
 import type { Weather } from "../types/weather";
 
+// svaret från geocoding-api:et
 interface GeocodingResponse {
   results?: { latitude: number; longitude: number }[];
 }
 
+// svaret från väder-api:et
 interface ForecastResponse {
   current: {
     temperature_2m: number;
@@ -37,6 +40,7 @@ async function getCapitalCoordinates(
   return data.results?.[0] ?? null;
 }
 
+// hämtar vädret just nu för landets huvudstad
 export async function getWeather(
   country: CountryDetails
 ): Promise<Weather | null> {

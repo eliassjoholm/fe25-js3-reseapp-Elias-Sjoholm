@@ -1,3 +1,5 @@
+// knappar för att filtrera på region
+// "All" = visa alla
 const REGIONS = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"];
 
 interface RegionFilterProps {
@@ -5,6 +7,7 @@ interface RegionFilterProps {
   onSelect: (region: string) => void;
 }
 
+// en knapp per region, den valda markeras
 export default function RegionFilter({
   selected,
   onSelect,
@@ -29,10 +32,10 @@ export default function RegionFilter({
               type="button"
               aria-pressed={isSelected}
               onClick={() => onSelect(region)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+              className={`rounded-full border px-4 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 ${
                 isSelected
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-300 bg-white text-gray-800 hover:bg-gray-100"
+                  ? "border-indigo-400 bg-indigo-400 text-indigo-950"
+                  : "border-slate-600 bg-slate-800 text-slate-200 hover:bg-slate-700"
               }`}
             >
               {region}

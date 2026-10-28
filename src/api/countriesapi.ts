@@ -1,8 +1,11 @@
+// anrop mot countries.dev
 import type { Countries, CountryDetails } from "../types/country";
 
+// hämtar bara fälten vi behöver
 const API_URL =
   "https://countries.dev/countries?fields=name,alpha3Code,region,capital,flags,population,area";
 
+// hämtar alla länder till startsidan
 export async function getCountries(): Promise<Countries[]> {
   const response = await fetch(API_URL);
 
@@ -12,6 +15,7 @@ export async function getCountries(): Promise<Countries[]> {
 
   const data: unknown = await response.json();
 
+  // kolla att vi faktiskt fick en lista
   if (!Array.isArray(data)) {
     throw new Error("Ogiltigt svar från API:et");
   }
@@ -19,6 +23,7 @@ export async function getCountries(): Promise<Countries[]> {
   return data as Countries[];
 }
 
+// hämtar ett land via landskoden, null om det inte finns
 export async function getCountry(
   code: string
 ): Promise<CountryDetails | null> {
@@ -27,6 +32,7 @@ export async function getCountry(
   );
 
   
+  // 404 = landet finns inte
   if (response.status === 404) {
     return null;
   }

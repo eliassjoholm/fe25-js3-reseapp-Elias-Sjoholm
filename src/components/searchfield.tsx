@@ -1,8 +1,10 @@
+// sökfältet på startsidan
 interface SearchFieldProps {
   value: string;
   onChange: (value: string) => void;
 }
 
+// skickar upp texten varje gång man skriver
 export default function SearchField({
   value,
   onChange,
@@ -22,7 +24,7 @@ export default function SearchField({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder="T.ex. Sweden"
-        className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        className="w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-slate-100 placeholder:text-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
       />
     </div>
   );
