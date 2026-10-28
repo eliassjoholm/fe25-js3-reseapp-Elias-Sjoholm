@@ -1,5 +1,7 @@
 import { Link, Route, Routes } from "react-router";
 import HomePage from "./pages/startpage";
+import CountryPage from "./pages/Countryhomepage";
+import NotFoundPage from "./pages/notFoundPage";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+         <Route path="/country/:code" element={<CountryPage />} />
+         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

@@ -10,3 +10,12 @@ export interface Countries {
   population: number;
   area: number | null;
 }
+
+export interface CountryDetails extends Countries {
+  alpha2Code: string;
+  nativeName?: string;
+  subregion?: string;
+  latlng?: number[];
+  languages?: { name: string }[];
+  currencies?: { code: string; name: string; symbol?: string }[];
+}
